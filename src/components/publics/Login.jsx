@@ -20,6 +20,7 @@ const Login = () => {
                 const response = await axios.post(LOGIN_URL, { email, password });
                 if(response?.status === 200){
                     setAuth({
+                        sub: response?.data?.sub,
                         username: response?.data?.username,
                         email: response?.data?.email,
                         role: response?.data?.role,
