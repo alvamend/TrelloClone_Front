@@ -12,6 +12,7 @@ html {
     --bg-color: rgb(250, 251, 252);
     --primary-color: #3865FE;
     --primary-dark: #162865;
+    --blue-gray: #343d5c;
     min-height: 100vh;
 }
 
@@ -153,6 +154,8 @@ button img{
         padding-left: 10px;
     }
 
+    /* Floating menu header */
+
     #floating-menu-workspaces{
         position: absolute;
         background-color: var(--primary-dark);
@@ -164,12 +167,33 @@ button img{
         display: none;
     }
 
+    .workspace-list{
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .workspace-list li{
+        padding: 10px;
+        margin-top: 5px;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+
+    .workspace-list li:hover{
+        background-color: var(--blue-gray);
+        cursor: pointer;
+    }
+
+    /* Sidebar */
+
     .sidebar{
         grid-area: sidebar;
         background-color: var(--primary-color);
         display: flex;
         justify-content: flex-end;
     }
+
+    /* Main Content */
 
     .content{
         grid-area: main_content;
