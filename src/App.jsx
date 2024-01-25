@@ -5,6 +5,7 @@ import Register from './components/publics/Register'
 import Home from './components/private/Home'
 import RequireAuth from './components/private/RequireAuth'
 import Workspace from './components/private/Workspace'
+import PersistLogin from './components/private/PersistLogin'
 
 function App() {
   return (
@@ -15,12 +16,14 @@ function App() {
       <Route path='signup' element={<Register />} />
 
       {/* Private Routes */}
-      <Route path='/' element={<RequireAuth />}>
-        <Route path='/home' element={<Home />} />
-      </Route>
+      <Route element={<PersistLogin />}>
+        <Route path='/' element={<RequireAuth />}>
+          <Route path='/home' element={<Home />} />
+        </Route>
 
-      <Route path='/' element={<RequireAuth />}>
-        <Route path='/workspace/:id' element={<Workspace />} />
+        <Route path='/' element={<RequireAuth />}>
+          <Route path='/workspace/:id' element={<Workspace />} />
+        </Route>
       </Route>
     </Routes>
   )
