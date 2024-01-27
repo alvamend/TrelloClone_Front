@@ -7,39 +7,10 @@ import WorkspaceHeaderList from "./WorkspaceHeaderList";
 import Create from "./floating-divs/Create";
 
 const FETCH_URL = 'workspace';
-const Header = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [workspaces, setWorkspaces] = useState([])
+const Header = ({ workspaces, setWorkspaces }) => {
     const { auth } = useAuth();
     const navigate = useNavigate();
     const logout = useLogout();
-
-    useEffect(() => {
-
-        const getWorkspaces = async () => {
-            try {
-                const response = await axios.get(FETCH_URL, {
-                    headers: {
-                        Authorization: auth.accessToken
-                    }
-                });
-                if (response?.status === 200) {
-                    setWorkspaces(response?.data);
-                    setIsLoading(false);
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        getWorkspaces();
-
-        return () => {
-            setWorkspaces([]);
-            setIsLoading(true);
-        }
-
-    }, [])
 
     const toggleWorkspaceMenu = (e) => {
         if (document.querySelector('#floating-menu-create').style.display === 'block') {
@@ -85,10 +56,7 @@ const Header = () => {
                     <div className="navbar">
                         <div style={{ position: 'relative' }}>
                             <button onClick={toggleWorkspaceMenu} id="workspace-btn">Workspaces <img src="/img/flecha-hacia-abajo.png" /></button>
-                            {isLoading
-                                ? ''
-                                : <WorkspaceHeaderList workspaces={workspaces} />
-                            }
+                            <WorkspaceHeaderList workspaces={workspaces} />
                         </div>
 
                         <div style={{ position: 'relative' }}>

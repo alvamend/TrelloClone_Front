@@ -82,19 +82,19 @@ const Workspace = () => {
                         </div>
                     </div>
                     <div style={{ width: '200px' }}>
-                        <button>+ Add Member</button>
+                        <button className="add-member">+ Add Member</button>
                     </div>
                 </div>
                 <hr />
                 <section className="workspace__information--board">
-                    <h2>Workspace Boards</h2>
+                    <h2>Boards</h2>
                     <div className="boards-list">
                         <div className="board-item" style={{backgroundColor:'gray'}}>
                             <h4>Create new board</h4>
                         </div>
                         {(workspace?.boards && workspace?.boards.length) > 0 && (
                             workspace.boards.map(board => (
-                                <div className="board-item" style={{backgroundColor:`${board.background}`}}>
+                                <div key={board._id} className="board-item" style={{backgroundColor:`${board.background}`}}>
                                     <h4>{board.title}</h4>
                                 </div>
                             ))

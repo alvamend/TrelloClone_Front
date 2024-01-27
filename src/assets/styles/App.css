@@ -45,6 +45,10 @@ a:active {
     color: var(--primary-color);
 }
 
+hr{
+    border: 1px lightgray solid;
+}
+
 input[type="text"],
 input[type="password"],
 input[type="email"] {
@@ -377,6 +381,10 @@ button img {
         align-items: center;
     }
 
+    .title_workspace h1{
+        color: var(--blue-gray);
+    }
+
     .title_workspace img {
         height: 40%;
         margin-left: 10px;
@@ -392,9 +400,22 @@ button img {
         align-items: center;
     }
 
+    .privacy_workspace p{
+        color: gray;
+    }
+
     .privacy_workspace img {
         height: 100%;
         margin-right: 5px;
+    }
+
+    .add-member{
+        transition: 0.2s;
+    }
+
+    .add-member:hover{
+        transition: 0.2s;
+        background-color: var(--primary-dark);
     }
 
     .workspace__information--board{
@@ -403,19 +424,33 @@ button img {
         padding: 10px;
     }
 
+    .workspace__information--board h2{
+        color: var(--blue-gray)
+    }
+
+    /* Board list under workspace */
+
     .boards-list{
         width: 100%;
         min-height: 100px;
         display: flex;
         flex-wrap: wrap;
         margin-top: 15px;
+        margin-bottom: 50px;
+    }
+
+    .boards-list:last-of-type{
+        margin-bottom: 0;
     }
 
     .board-item{
         width: calc(100% / 3 - 10px);
-        border-radius: 3px;
+        height: 100px;
+        border-radius: 5px;
         margin-right: 10px;
+        margin-top: 10px;
         padding: 15px;
+        border: 1px lightgray solid;
     }
 
     .board-item:hover{
