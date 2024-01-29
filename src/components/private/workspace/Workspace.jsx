@@ -67,6 +67,12 @@ const Workspace = () => {
 
     }, [project]);
 
+    const showAddMember = (e) => {
+        document.querySelector('.modal-background').style.display = 'flex';
+        document.querySelector('.modal-content').style.display = 'block';
+        document.querySelector('#add-member').style.display = 'block';
+    }
+
     return (
         isLoading
             ? <h4>Loading...</h4>
@@ -83,7 +89,7 @@ const Workspace = () => {
                         </div>
                     </div>
                     <div style={{ width: '200px' }}>
-                        <button className="add-member">+ Add Member</button>
+                        <button className="add-member" onClick={showAddMember}>+ Add Member</button>
                     </div>
                 </div>
                 <hr />

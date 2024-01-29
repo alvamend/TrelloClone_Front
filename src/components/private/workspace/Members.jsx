@@ -3,7 +3,7 @@ const Members = ({ workspace }) => {
         <>
             <h2>Members</h2>
             <ul className="members-list">
-                {workspace?.members.length > 0 && (
+                {(workspace?.members && workspace?.members.length > 0) && (
                     workspace.members.map(member => (
                         <li key={member._id}>
                             <div>

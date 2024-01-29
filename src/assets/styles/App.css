@@ -252,6 +252,7 @@ button img {
         padding: 15px;
         border-radius: 5px;
         display: none;
+        z-index: 1;
     }
 
     .avatar-list {
@@ -314,6 +315,10 @@ button img {
     }
 
     #create-board {
+        display: none;
+    }
+
+    #add-member {
         display: none;
     }
 
@@ -485,6 +490,7 @@ button img {
         height: 25px;
         aspect-ratio: 1/1;
         cursor: pointer;
+        margin-top: 8px;
     }
 
     .members__action img {
@@ -499,4 +505,61 @@ button img {
         background-color: red;
         width: 250px;
     }
+
+    #privacy-settings {
+        display: none;
+        position: absolute;
+        background-color: var(--primary-dark);
+        width: 400px;
+        min-height: 50px;
+        z-index: 1;
+        border-radius: 5px;
+    }
+
+    #privacy-settings_list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    #privacy-settings_list li{
+        display: flex;
+        align-items: center;
+        padding-right: 20px;
+        padding-left: 10px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        min-height: 50px;
+        color: white;
+    }
+
+    #privacy-settings_list li:hover{
+        background-color: var(--blue-gray);
+        cursor: pointer;
+    }
+
+    #privacy-settings_list li div{
+        height: 30px;
+    }
+
+    #delete-workspace{
+        border: 0;
+        border-radius: 5px;
+        width: 350px;
+        text-align: center;
+    }
+
+    #delete-workspace .delete-btn{
+        position: relative;
+        top: unset;
+        left: unset;
+        transform: unset;
+        background-color: var(--blue-gray);
+        width: 150px;
+        margin: 10px auto;
+    }
+
+    #delete-workspace .delete-btn:hover{
+        background-color: var(--primary-dark);
+    }
+
 }
