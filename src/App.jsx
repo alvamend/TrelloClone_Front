@@ -3,9 +3,9 @@ import './assets/styles/App.css'
 import Login from './components/publics/Login'
 import Register from './components/publics/Register'
 import Home from './components/private/Home'
-import RequireAuth from './components/private/RequireAuth'
+import RequireAuth from './components/private/utils/RequireAuth'
 import Workspace from './components/private/Workspace'
-import PersistLogin from './components/private/PersistLogin'
+import PersistLogin from './components/private/utils/PersistLogin'
 
 function App() {
   return (
