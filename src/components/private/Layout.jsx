@@ -40,8 +40,6 @@ const Layout = () => {
 
     }, [])
 
-    console.log(workspaces);
-
     return (
         <div className="layout">
             {isLoading
@@ -49,7 +47,7 @@ const Layout = () => {
                 : (
                     <>
                         <Header workspaces={workspaces} setWorkspaces={setWorkspaces} />
-                        <Sidebar />
+                        <Sidebar workspaces={workspaces} />
                     </>
                 )
             }

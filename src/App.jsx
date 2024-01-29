@@ -4,7 +4,7 @@ import Login from './components/publics/Login'
 import Register from './components/publics/Register'
 import Home from './components/private/Home'
 import RequireAuth from './components/private/utils/RequireAuth'
-import Workspace from './components/private/Workspace'
+import Workspace from './components/private/workspace/Workspace'
 import PersistLogin from './components/private/utils/PersistLogin'
 
 function App() {
@@ -22,7 +22,8 @@ function App() {
         </Route>
 
         <Route path='/' element={<RequireAuth />}>
-          <Route path='/workspace/:id' element={<Workspace />} />
+          {/* Contains routes inside the component */}
+          <Route path='/workspace/:id/*' element={<Workspace />} />
         </Route>
       </Route>
     </Routes>

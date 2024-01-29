@@ -8,7 +8,7 @@ import Create from "./floating-divs/Create";
 
 const FETCH_URL = 'workspace';
 const Header = ({ workspaces, setWorkspaces }) => {
-    const { auth } = useAuth();
+    const { auth, setProject } = useAuth();
     const navigate = useNavigate();
     const logout = useLogout();
 
@@ -45,11 +45,26 @@ const Header = ({ workspaces, setWorkspaces }) => {
         };
     }
 
+    const showModals = (type) => {
+        if (type === 'board') {
+            document.querySelector('#create-board').style.display = 'block';
+        }
+        if (type === 'workspace') {
+            document.querySelector('#create-workspace').style.display = 'block';
+        }
+        document.querySelector('#floating-menu-create').style.display = 'none'
+        document.querySelector('.modal-background').style.display = 'flex';
+    }
+
     return (
         <>
             <header className="header">
                 <div style={{ display: 'flex' }}>
-                    <div className="img-logo" onClick={e => navigate('/home')}>
+                    <div className="img-logo" onClick={e => {
+                        setProject({})
+                        navigate('/home')
+                    }
+                    }>
                         <img src="/img/logo-trello.png" style={{ cursor: 'pointer' }} />
                     </div>
 
@@ -66,17 +81,13 @@ const Header = ({ workspaces, setWorkspaces }) => {
                             <div id="floating-menu-create">
                                 <ul className="create-list">
                                     <li onClick={e => {
-                                        document.querySelector('#floating-menu-create').style.display = 'none'
-                                        document.querySelector('.modal-background').style.display = 'flex';
-                                        document.querySelector('#create-board').style.display = 'block';
+                                        showModals('board');
                                     }}>
                                         <h4>Create board</h4>
                                         <p>A board is made up of cards ordered on lists. Use it to manage projects, track information, or organize anything</p>
                                     </li>
                                     <li onClick={e => {
-                                        document.querySelector('#floating-menu-create').style.display = 'none'
-                                        document.querySelector('.modal-background').style.display = 'flex';
-                                        document.querySelector('#create-workspace').style.display = 'block';
+                                        showModals('workspace');
                                     }}>
                                         <h4>Create Workspace</h4>
                                         <p>A workspace is a space of boards and people. Use it to organize your company, side hustle, family, or friends.</p>

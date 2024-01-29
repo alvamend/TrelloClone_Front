@@ -45,7 +45,7 @@ a:active {
     color: var(--primary-color);
 }
 
-hr{
+hr {
     border: 1px lightgray solid;
 }
 
@@ -194,11 +194,13 @@ button img {
         padding: 15px;
         border-radius: 5px;
         display: none;
+        z-index: 1;
     }
 
     .workspace-list {
         list-style: none;
         padding-left: 0;
+        font-family: var(--font);
     }
 
     .workspace-list li {
@@ -222,6 +224,7 @@ button img {
         min-height: 25px;
         border-radius: 5px;
         display: none;
+        z-index: 1;
     }
 
     .create-list {
@@ -306,11 +309,11 @@ button img {
         align-items: center;
     }
 
-    #create-workspace{
+    #create-workspace {
         display: none;
     }
 
-    #create-board{
+    #create-board {
         display: none;
     }
 
@@ -381,7 +384,7 @@ button img {
         align-items: center;
     }
 
-    .title_workspace h1{
+    .title_workspace h1 {
         color: var(--blue-gray);
     }
 
@@ -400,7 +403,7 @@ button img {
         align-items: center;
     }
 
-    .privacy_workspace p{
+    .privacy_workspace p {
         color: gray;
     }
 
@@ -409,28 +412,31 @@ button img {
         margin-right: 5px;
     }
 
-    .add-member{
+    .add-member {
         transition: 0.2s;
     }
 
-    .add-member:hover{
+    .add-member:hover {
         transition: 0.2s;
         background-color: var(--primary-dark);
     }
 
-    .workspace__information--board{
+    .workspace__information {
         width: 70%;
         margin: 50px auto;
         padding: 10px;
+        min-height: 500px;
+        position: relative;
     }
 
-    .workspace__information--board h2{
+    .workspace__information h2,
+    .workspace__information h3 {
         color: var(--blue-gray)
     }
 
     /* Board list under workspace */
 
-    .boards-list{
+    .boards-list {
         width: 100%;
         min-height: 100px;
         display: flex;
@@ -439,11 +445,11 @@ button img {
         margin-bottom: 50px;
     }
 
-    .boards-list:last-of-type{
+    .boards-list:last-of-type {
         margin-bottom: 0;
     }
 
-    .board-item{
+    .board-item {
         width: calc(100% / 3 - 10px);
         height: 100px;
         border-radius: 5px;
@@ -453,7 +459,44 @@ button img {
         border: 1px lightgray solid;
     }
 
-    .board-item:hover{
+    .board-item:hover {
         cursor: pointer;
+    }
+
+    /* Members list workspace settings  */
+    .members-list {
+        font-family: var(--font);
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .members-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: lightgray;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        padding: 20px;
+    }
+
+    .members__action {
+        text-align: center;
+        height: 25px;
+        aspect-ratio: 1/1;
+        cursor: pointer;
+    }
+
+    .members__action img {
+        height: 100%;
+    }
+
+    .workspace__information button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: red;
+        width: 250px;
     }
 }

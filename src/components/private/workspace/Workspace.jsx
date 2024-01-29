@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { Outlet, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import Boards from "./Boards";
+import Members from "./Members";
+import WorkspaceSettings from "./WorkspaceSettings";
 
 const Workspace = () => {
 
@@ -64,8 +67,6 @@ const Workspace = () => {
 
     }, [project]);
 
-    console.log(workspace);
-
     return (
         isLoading
             ? <h4>Loading...</h4>
@@ -86,21 +87,20 @@ const Workspace = () => {
                     </div>
                 </div>
                 <hr />
-                <section className="workspace__information--board">
-                    <h2>Boards</h2>
-                    <div className="boards-list">
-                        <div className="board-item" style={{backgroundColor:'gray'}}>
-                            <h4>Create new board</h4>
-                        </div>
-                        {(workspace?.boards && workspace?.boards.length) > 0 && (
-                            workspace.boards.map(board => (
-                                <div key={board._id} className="board-item" style={{backgroundColor:`${board.background}`}}>
-                                    <h4>{board.title}</h4>
-                                </div>
-                            ))
-                        )}
-                    </div>
-                </section>
+
+                {/* Routes Inside Workspace */}
+                <Routes>
+                    <Route path="/" element={
+                        <section className="workspace__information">
+                            <Outlet />
+                        </section>
+                    }>
+                        <Route index element={<Boards workspace={workspace} />} />
+                        <Route path="b" element={<Boards workspace={workspace} />} />
+                        <Route path="m" element={<Members workspace={workspace} />} />
+                        <Route path="s" element={<WorkspaceSettings workspace={workspace} />} />
+                    </Route>
+                </Routes>
             </>
     )
 }
