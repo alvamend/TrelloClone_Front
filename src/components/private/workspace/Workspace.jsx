@@ -77,7 +77,7 @@ const Workspace = () => {
         isLoading
             ? <h4>Loading...</h4>
             : <>
-                <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex', padding:'15px' }}>
                     <div style={{ width: 'calc(100% - 200px)' }}>
                         <div className="title_workspace">
                             <h1>{workspace.title}</h1>
@@ -103,7 +103,7 @@ const Workspace = () => {
                     }>
                         <Route index element={<Boards workspace={workspace} />} />
                         <Route path="b" element={<Boards workspace={workspace} />} />
-                        <Route path="m" element={<Members workspace={workspace} />} />
+                        <Route path="m" element={<Members workspace={workspace} setWorkspace={setWorkspace} />} />
                         <Route path="s" element={<WorkspaceSettings workspace={workspace} />} />
                     </Route>
                 </Routes>

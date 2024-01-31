@@ -5,7 +5,7 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 const EDIT_URL = 'workspace'
 const WorkspaceSettings = ({ workspace }) => {
 
-    const { auth, project, setProject } = useAuth();
+    const { auth, setProject } = useAuth();
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
 
@@ -19,10 +19,6 @@ const WorkspaceSettings = ({ workspace }) => {
                 }
             });
             if (response?.status === 200) {
-                setProject({
-                    ...project,
-                    privacy: privacyStatus
-                })
                 document.querySelector('#privacy-settings').style.display = 'none'
             }
         } catch (error) {
@@ -45,7 +41,7 @@ const WorkspaceSettings = ({ workspace }) => {
                         Authorization: auth.accessToken
                     }
                 });
-                if (response?.status === 200){
+                if (response?.status === 200) {
                     navigate('/home');
                     window.location.reload();
                     setProject({});
@@ -54,7 +50,7 @@ const WorkspaceSettings = ({ workspace }) => {
                 console.error(error?.response?.data);
             }
         }
-    }
+    };
 
     return (
         <>
@@ -92,26 +88,34 @@ const WorkspaceSettings = ({ workspace }) => {
             <p style={{ textTransform: 'capitalize' }}>
                 {workspace.privacy === 'private' ? "This Workspace is private. It's not indexed or visible to those outside the Workspace" : "This Workspace is public. It's visible to anyone with the link and will show up in search engines like Google. Only those invited to the Workspace can add and edit Workspace boards."}
             </p>
-            <div>
-                <button onClick={showDeleteModal}>Delete this workspace</button>
-            </div>
-            <dialog id="delete-workspace">
-                <h2>Are you sure?</h2><hr />
-                <h3 style={{ textAlign: 'start' }}>Enter the Workspace name "{workspace.title}" to delete</h3>
-                <div style={{ textAlign: 'start', marginTop: '10px' }}>
-                    <h4>Things to know:</h4>
-                    <ul style={{ paddingLeft: '10px', fontFamily: 'var(--font)' }}>
-                        <li>This is permanent and can't be undone.</li>
-                        <li>All boards in this Workspace will be closed.</li>
-                        <li>Board admins can reopen boards.</li>
-                        <li>Board members will not be able to interact with closed boards.</li>
-                    </ul>
-                    <form method="dialog" onSubmit={deleteWorkspace}>
-                        <input style={{ width: '100%' }} type="text" placeholder="Enter workspace name to delete" name="workspaceName" />
-                        <button className="delete-btn">Delete</button>
-                    </form>
-                </div>
-            </dialog>
+            {
+                (workspace.members[0].user._id === auth.sub) && (
+                    <>
+                        <div>
+                            <button onClick={showDeleteModal}>Delete this workspace</button>
+                        </div>
+                        <dialog id="delete-workspace">
+                            <h2>Are you sure?</h2><hr />
+                            <h3 style={{ textAlign: 'start' }}>Enter the Workspace name "{workspace.title}" to delete</h3>
+                            <div style={{ textAlign: 'start', marginTop: '10px' }}>
+                                <h4>Things to know:</h4>
+                                <ul style={{ paddingLeft: '10px', fontFamily: 'var(--font)' }}>
+                                    <li>This is permanent and can't be undone.</li>
+                                    <li>All boards in this Workspace will be closed.</li>
+                                    <li>Board admins can reopen boards.</li>
+                                    <li>Board members will not be able to interact with closed boards.</li>
+                                </ul>
+                                <form method="dialog" onSubmit={deleteWorkspace}>
+                                    <input style={{ width: '100%' }} type="text" placeholder="Enter workspace name to delete" name="workspaceName" />
+                                    <button className="delete-btn">Delete</button>
+                                </form>
+                            </div>
+                        </dialog>
+                    </>
+                )
+            }
+
+
         </>
     )
 }

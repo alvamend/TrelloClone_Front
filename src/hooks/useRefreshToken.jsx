@@ -1,10 +1,12 @@
 import useAuth from "./useAuth";
 import axios from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const URL = 'auth/refresh';
 const useRefreshToken = () => {
 
     const { auth, setAuth } = useAuth();
+    const navigate = useNavigate();
 
     const refresh = async () => {
         try {
@@ -16,7 +18,7 @@ const useRefreshToken = () => {
             }
             return response.data.accessToken;
         } catch (error) {
-            error?.response?.status === 403 ? console.error('Expired Cookie') : '';
+            error?.response?.status === 403 ? navigate('/login') : '';
         }
     };
 

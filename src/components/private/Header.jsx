@@ -61,7 +61,7 @@ const Header = ({ workspaces, setWorkspaces }) => {
             <header className="header">
                 <div style={{ display: 'flex' }}>
                     <div className="img-logo" onClick={e => {
-                        setProject({})
+                        sessionStorage.setItem('project', null)
                         navigate('/home')
                     }
                     }>

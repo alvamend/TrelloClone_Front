@@ -6,6 +6,7 @@ import Home from './components/private/Home'
 import RequireAuth from './components/private/utils/RequireAuth'
 import Workspace from './components/private/workspace/Workspace'
 import PersistLogin from './components/private/utils/PersistLogin'
+import Board from './components/private/board/Board'
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
         <Route path='/' element={<RequireAuth />}>
           {/* Contains routes inside the component */}
           <Route path='/workspace/:id/*' element={<Workspace />} />
+        </Route>
+
+        <Route path='/' element={<RequireAuth />}>
+          <Route path='/board/:id/*' element={<Board />} />
         </Route>
       </Route>
     </Routes>

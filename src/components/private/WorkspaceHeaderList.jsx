@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { useEffect } from "react";
 
 const WorkspaceHeaderList = ({ workspaces }) => {
 
-    const { auth, setProject } = useAuth();
+    const { auth, project, setProject } = useAuth();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        sessionStorage.setItem('project', JSON.stringify(project));
+    }, [project])
 
     return (
         <div id="floating-menu-workspaces">
@@ -14,7 +19,7 @@ const WorkspaceHeaderList = ({ workspaces }) => {
                 {workspaces.map(workspace => (
                     (workspace.members[0].user === auth.sub)
                         ? <li key={workspace._id} onClick={e => {
-                            setProject(workspace);
+                            setProject(workspace._id);
                             navigate(`/workspace/${workspace._id}`);
                             document.querySelector('#floating-menu-workspaces').style.display = 'none';
                         }}>
@@ -28,7 +33,7 @@ const WorkspaceHeaderList = ({ workspaces }) => {
                 {workspaces.map(workspace => (
                     (workspace.members[0].user !== auth.sub)
                         ? <li key={workspace._id} onClick={e => {
-                            setProject(workspace);
+                            setProject(workspace._id);
                             navigate(`/workspace/${workspace._id}`);
                             document.querySelector('#floating-menu-workspaces').style.display = 'none';
                         }}>
