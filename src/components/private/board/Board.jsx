@@ -8,7 +8,7 @@ const Board = () => {
 
     const params = useParams();
     const axiosPrivate = useAxiosPrivate();
-    const [board, setBoard] = useState({});
+    const [boardInfo, setBoardInfo] = useState({});
     const { auth } = useAuth();
     const [isLoading, setIsLoading] = useState(true);
 
@@ -22,7 +22,7 @@ const Board = () => {
                     }
                 });
                 if (response?.status === 200) {
-                    setBoard(response?.data);
+                    setBoardInfo(response?.data);
                     document.querySelector('.content').style.background = response?.data?.background
                 }
             } catch (error) {
@@ -35,7 +35,7 @@ const Board = () => {
         getBoardData();
 
         return () => {
-            setBoard({});
+            setBoardInfo({});
             setIsLoading(true);
             document.querySelector('.content').style.background = 'white'
         }
@@ -56,15 +56,15 @@ const Board = () => {
                 <>
                     <div className="board-header">
                         <div className="board-header_icon">
-                            <h2 style={{ marginRight: '20px' }}>{board?.title}</h2>
+                            <h2 style={{ marginRight: '20px' }}>{boardInfo?.title}</h2>
                             <img src='/img/candado.png' />
-                            <p style={{ textTransform: 'capitalize' }}>{board?.privacy}</p>
+                            <p style={{ textTransform: 'capitalize' }}>{boardInfo?.privacy}</p>
                         </div>
                         <div className="board-header_icon" onClick={toggleBoardMenu}>
                             <img src="/img/configuracion.png" style={{ cursor: 'pointer' }} />
                         </div>
                     </div>
-                    <BoardSideMenu board={board} />
+                    <BoardSideMenu board={boardInfo} setBoard={setBoardInfo} />
                 </>
             )
     )

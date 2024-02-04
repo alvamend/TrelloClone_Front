@@ -104,7 +104,7 @@ const Workspace = () => {
                         <Route index element={<Boards workspace={workspace} />} />
                         <Route path="b" element={<Boards workspace={workspace} />} />
                         <Route path="m" element={<Members workspace={workspace} setWorkspace={setWorkspace} />} />
-                        <Route path="s" element={<WorkspaceSettings workspace={workspace} />} />
+                        <Route path="s" element={<WorkspaceSettings workspace={workspace} setWorkspace={setWorkspace} />} />
                     </Route>
                 </Routes>
             </>

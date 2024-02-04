@@ -3,7 +3,7 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const EDIT_URL = 'workspace'
-const WorkspaceSettings = ({ workspace }) => {
+const WorkspaceSettings = ({ workspace, setWorkspace }) => {
 
     const { auth, setProject } = useAuth();
     const axiosPrivate = useAxiosPrivate();
@@ -19,6 +19,10 @@ const WorkspaceSettings = ({ workspace }) => {
                 }
             });
             if (response?.status === 200) {
+                setWorkspace({
+                    ...workspace,
+                    privacy: privacyStatus
+                })
                 document.querySelector('#privacy-settings').style.display = 'none'
             }
         } catch (error) {

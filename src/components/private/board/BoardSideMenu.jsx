@@ -1,6 +1,24 @@
+import { useEffect, useRef, useState } from "react";
 import Backgrounds from "./Backgrounds";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useAuth from "../../../hooks/useAuth";
 
-const BoardSideMenu = ({ board }) => {
+const URL = 'board';
+const BoardSideMenu = ({ board, setBoard }) => {
+
+    const descriptionRef = useRef();
+    const [descriptionValue, setDescriptionValue] = useState('');
+    const { auth } = useAuth();
+    const axiosPrivate = useAxiosPrivate();
+
+    useEffect(() => {
+        const successDiv = document.querySelector('.successModal');
+        window.onclick = function (event) {
+            if(event.target !== successDiv){
+                successDiv.style.display = 'none'
+            }
+        }
+    }, [])
 
     const toggleSubMenus = (menuName) => {
         if (document.querySelector('#submenu').style.transform === 'translateX(360px)') {
@@ -34,6 +52,34 @@ const BoardSideMenu = ({ board }) => {
                     document.querySelector('#submenu_background').style.display = 'none'
                 }
             }
+        }
+    }
+
+    const enableEditDescription = (e) => {
+        descriptionRef.current.disabled = false;
+        descriptionRef.current.focus();
+    }
+
+    const sendEdit = async (e) => {
+        if (e.key === 'Enter') {
+            try {
+                const response = await axiosPrivate.put(`${URL}/${board._id}`, {
+                    description: descriptionValue
+                }, {
+                    headers: {
+                        Authorization: auth.acessToken
+                    }
+                });
+                console.log(response?.data);
+                if (response?.status === 200) {
+                    document.querySelector('.successModal').style.display = 'block'
+                    descriptionRef.current.disable = true;
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            setDescriptionValue(e.target.value);
         }
     }
 
@@ -109,7 +155,13 @@ const BoardSideMenu = ({ board }) => {
                     </section><hr />
                     <section>
                         <h4>Description</h4>
-                        <p style={{ marginTop: '15px' }}>{board.description}</p>
+                        <textarea
+                            disabled
+                            className="b-description"
+                            ref={descriptionRef}
+                            defaultValue={board.description}
+                            onKeyDown={sendEdit}>
+                        </textarea>
                     </section><hr />
                     <section>
                         <h4>Board members</h4>
@@ -127,8 +179,8 @@ const BoardSideMenu = ({ board }) => {
                     <section>
                         <h4>Actions</h4>
                         <ul>
-                            <li><strong>Edit description</strong></li>
-                            <li><strong>Add member</strong></li>
+                            <li><strong style={{ cursor: 'pointer' }} onClick={enableEditDescription}>Edit description</strong></li>
+                            <li><strong style={{ cursor: 'pointer' }}>Add member</strong></li>
                         </ul>
                     </section>
                 </section>
@@ -180,6 +232,12 @@ const BoardSideMenu = ({ board }) => {
                 </section>
 
             </aside>
+            <div className="successModal">
+                <p style={{ textAlign: 'end', color: 'white', cursor: 'pointer' }} onClick={e => {
+                    document.querySelector('.successModal').style.display = 'none'
+                }}>X</p>
+                <p style={{ color: 'white', fontWeight: 'bold' }}>Description has been updated</p>
+            </div>
         </>
     )
 };
