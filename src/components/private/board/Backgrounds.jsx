@@ -2,7 +2,7 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const URL = 'board'
-const Backgrounds = ({ gradient, board }) => {
+const Backgrounds = ({ gradient, board, mini = false }) => {
 
     const { auth } = useAuth();
     const axiosPrivate = useAxiosPrivate();
@@ -25,7 +25,7 @@ const Backgrounds = ({ gradient, board }) => {
     }
 
     return (
-        <div className="background-item" style={{ background: gradient }} onClick={updateBackground}>
+        <div className={!mini ? 'background-item' : 'background-item mini'} style={{ background: gradient }} onClick={updateBackground}>
 
         </div>
     )

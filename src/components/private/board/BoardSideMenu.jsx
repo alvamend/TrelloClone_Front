@@ -2,15 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import Backgrounds from "./Backgrounds";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import useAuth from "../../../hooks/useAuth";
+import copy from 'clipboard-copy';
 
 const URL = 'board';
 const BoardSideMenu = ({ board, setBoard }) => {
 
     const descriptionRef = useRef();
+    const axiosPrivate = useAxiosPrivate();
+    const linkToCopy = window.location;
+    const [isCopied, setIsCopied] = useState(false);
     const [descriptionValue, setDescriptionValue] = useState('');
     const [message, setMessage] = useState('');
     const { auth } = useAuth();
-    const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
         const successDiv = document.querySelector('.successModal');
@@ -108,20 +111,30 @@ const BoardSideMenu = ({ board, setBoard }) => {
 
     const editPrivacy = async (value) => {
         try {
-            const response = await axiosPrivate.put(`${URL}/${board._id}`,{
+            const response = await axiosPrivate.put(`${URL}/${board._id}`, {
                 privacy: value
             }, {
                 headers: {
                     Authorization: auth.accessToken
                 }
             });
-            if(response?.status === 200){
+            if (response?.status === 200) {
                 setBoard({
                     ...board,
                     privacy: value
                 });
                 document.querySelector('#edit-privacy-board').style.display = 'none'
             }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const handleCopyToClipboard = async (e) => {
+        try {
+            await copy(linkToCopy);
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 3000);
         } catch (error) {
             console.error(error);
         }
@@ -161,7 +174,7 @@ const BoardSideMenu = ({ board, setBoard }) => {
                     </li>
                 </ul><hr />
                 <ul>
-                    <li className="board-sidemenu_item">
+                    <li className="board-sidemenu_item" onClick={handleCopyToClipboard}>
                         <div className="board-sidemenu_item--icon">
                             <img src="/img/compartir.png" alt="Share" />
                         </div>
@@ -173,6 +186,10 @@ const BoardSideMenu = ({ board, setBoard }) => {
                         </div>
                         <p>Delete board</p>
                     </li>
+                    {isCopied
+                        ? <p>Copied!</p>
+                        : ''
+                    }
                 </ul>
             </aside>
 
@@ -191,7 +208,7 @@ const BoardSideMenu = ({ board, setBoard }) => {
                                     (member.boardRole === 'administrator') && (
                                         <li key={member._id} >
                                             <h4>{member?.user?.name} {member?.user?.surname}</h4>
-                                            <p style={{color:'darkgray'}}>@{member?.user?.username}</p>
+                                            <p style={{ color: 'darkgray' }}>@{member?.user?.username}</p>
                                         </li>
                                     )
                                 ))
@@ -216,7 +233,7 @@ const BoardSideMenu = ({ board, setBoard }) => {
                                     (member.boardRole !== 'administrator') && (
                                         <li key={member._id}>
                                             <h4>{member?.user?.name} {member?.user?.surname}</h4>
-                                            <p style={{color:'darkgray'}}>@{member?.user?.username}</p>
+                                            <p style={{ color: 'darkgray' }}>@{member?.user?.username}</p>
                                         </li>
                                     )
                                 ))
@@ -261,17 +278,17 @@ const BoardSideMenu = ({ board, setBoard }) => {
                     </div><hr />
                     <section>
                         <h4>Privacy</h4>
-                        <p style={{ textTransform: 'capitalize', color:'darkgray' }}>{board.privacy}</p>
+                        <p style={{ textTransform: 'capitalize', color: 'darkgray' }}>{board.privacy}</p>
                         <h4 style={{ fontStyle: 'italic', marginTop: '10px' }}>Privacy information</h4>
                         <ul>
                             <li>
-                                <p style={{color:'darkgray'}}>Private. Only MEMBERS of the board are allowed to access to it</p>
+                                <p style={{ color: 'darkgray' }}>Private. Only MEMBERS of the board are allowed to access to it</p>
                             </li>
                             <li style={{ marginTop: '10px' }}>
-                                <p style={{color:'darkgray'}}>Workspace. Any MEMBER of the current workspace is able to access the board</p>
+                                <p style={{ color: 'darkgray' }}>Workspace. Any MEMBER of the current workspace is able to access the board</p>
                             </li>
                             <li style={{ marginTop: '10px' }}>
-                                <p style={{color:'darkgray'}}>Public. Anyone with the link can access to it, but can't modify as only members of the board and users with administrator role are able to edit</p>
+                                <p style={{ color: 'darkgray' }}>Public. Anyone with the link can access to it, but can't modify as only members of the board and users with administrator role are able to edit</p>
                             </li>
                         </ul>
                     </section><hr />
@@ -297,7 +314,7 @@ const BoardSideMenu = ({ board, setBoard }) => {
                         <p className="close" onClick={e => toggleSubMenus('#submenu_background')}>x</p>
                     </div><hr />
                     <div>
-                        <h4>Colors</h4>
+                        <h4>Gradient</h4>
                         <div className="backgrounds-container">
                             <Backgrounds gradient='linear-gradient(315deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)' board={board} />
                             <Backgrounds gradient='linear-gradient(315deg, rgba(204,94,0,1) 0%, rgba(255,160,0,1) 35%, rgba(255,250,0,1) 100%)' board={board} />
@@ -305,6 +322,17 @@ const BoardSideMenu = ({ board, setBoard }) => {
                             <Backgrounds gradient='linear-gradient(315deg, rgba(241,142,255,1) 0%, rgba(232,84,255,1) 35%, rgba(87,0,147,1) 100%)' board={board} />
                             <Backgrounds gradient='linear-gradient(315deg, rgba(0,0,0,1) 0%, rgba(109,71,115,1) 35%, rgba(0,0,0,1) 100%)' board={board} />
                             <Backgrounds gradient='linear-gradient(315deg, rgba(52,0,0,1) 0%, rgba(154,24,24,1) 35%, rgba(255,0,0,1) 100%)' board={board} />
+                        </div>
+                        <hr />
+                        <div>
+                            <h4>Basic</h4>
+                            <div className="backgrounds-container" style={{columnGap: '5px'}}>
+                                <Backgrounds gradient='#fff' mini={true} board={board} />
+                                <Backgrounds gradient='#000' mini={true} board={board} />
+                                <Backgrounds gradient='#ff0000' mini={true} board={board} />
+                                <Backgrounds gradient='#08002b' mini={true} board={board} />
+                                <Backgrounds gradient='#00b907' mini={true} board={board} />
+                            </div>
                         </div>
                     </div>
                 </section>

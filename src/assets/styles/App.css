@@ -675,6 +675,10 @@ button img {
         cursor: pointer;
     }
 
+    .mini{
+        width: 18%;
+    }
+
     /* Board settings submenu */
     .b-description{
         background-color: transparent;
