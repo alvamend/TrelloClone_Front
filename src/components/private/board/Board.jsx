@@ -57,7 +57,9 @@ const Board = () => {
                     <div className="board-header">
                         <div className="board-header_icon">
                             <h2 style={{ marginRight: '20px' }}>{boardInfo?.title}</h2>
-                            <img src='/img/candado.png' />
+                            {boardInfo.privacy === 'private' && (<img src="/img/candado.png" />)}
+                            {boardInfo.privacy === 'public' && (<img src="/img/tierra.png" />)}
+                            {boardInfo.privacy === 'workspace' && (<img src="/img/personas.png" />)}
                             <p style={{ textTransform: 'capitalize' }}>{boardInfo?.privacy}</p>
                         </div>
                         <div className="board-header_icon" onClick={toggleBoardMenu}>

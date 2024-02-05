@@ -17,7 +17,6 @@ const useLogout = () => {
                 },
                 withCredentials: true
             });
-            console.log(response);
         } catch (error) {
             console.error(error);
         }

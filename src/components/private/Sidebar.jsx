@@ -65,7 +65,7 @@ const Sidebar = ({ workspaces }) => {
                                             <h3 style={{ color: 'var(--primary-dark)' }}>Workspace Menu</h3>
                                             <ul className="workspace-list">
                                                 <li className="avatar-list_item" onClick={e => {
-                                                    navigate(`/workspace/${project}/b`)
+                                                    navigate(`/workspace/${project.id}/b`)
                                                 }
                                                 }>
                                                     <div className="list-icon">
@@ -74,7 +74,7 @@ const Sidebar = ({ workspaces }) => {
                                                     <p>Boards</p>
                                                 </li>
                                                 <li className="avatar-list_item" onClick={e => {
-                                                    navigate(`/workspace/${project}/m`)
+                                                    navigate(`/workspace/${project.id}/m`)
                                                 }
                                                 }>
                                                     <div className="list-icon">
@@ -83,7 +83,7 @@ const Sidebar = ({ workspaces }) => {
                                                     <p>Members</p>
                                                 </li>
                                                 <li className="avatar-list_item" onClick={e => {
-                                                    navigate(`/workspace/${project}/s`)
+                                                    navigate(`/workspace/${project.id}/s`)
                                                 }
                                                 }>
                                                     <div className="list-icon">

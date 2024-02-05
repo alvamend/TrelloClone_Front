@@ -679,10 +679,43 @@ button img {
     .b-description{
         background-color: transparent;
         border: none;
-        color: white;
+        color: darkgray;
         font-family: var(--font);
         margin-top: 15px;
         resize: none;
         width: 100%;
+    }
+
+    .floating_div_board_menu{
+        position: absolute;
+        width: 200px;
+        min-height: 50px;
+        border-radius: 10px;
+        border: 1px white solid;
+        padding: 10px;
+        z-index: 2;
+    }
+
+    .floating_div_board_menu ul{
+        margin: 0;
+    }
+
+    .floating_div_board_menu ul li{
+        padding: 5px;
+    }
+
+    .floating_div_board_menu ul li:hover{
+        cursor: pointer;
+        background-color: var(--blue-gray);
+    }
+
+    #add-member-board{
+        width: 100%;
+        text-align: center;
+        display: none;
+    }
+
+    #edit-privacy-board{
+        display: none;
     }
 }

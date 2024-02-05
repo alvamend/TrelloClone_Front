@@ -8,13 +8,14 @@ const BoardSideMenu = ({ board, setBoard }) => {
 
     const descriptionRef = useRef();
     const [descriptionValue, setDescriptionValue] = useState('');
+    const [message, setMessage] = useState('');
     const { auth } = useAuth();
     const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
         const successDiv = document.querySelector('.successModal');
         window.onclick = function (event) {
-            if(event.target !== successDiv){
+            if (event.target !== successDiv) {
                 successDiv.style.display = 'none'
             }
         }
@@ -72,8 +73,9 @@ const BoardSideMenu = ({ board, setBoard }) => {
                 });
                 console.log(response?.data);
                 if (response?.status === 200) {
+                    setMessage('Description was updated')
                     document.querySelector('.successModal').style.display = 'block'
-                    descriptionRef.current.disable = true;
+                    descriptionRef.current.disabled = true;
                 }
             } catch (error) {
                 console.error(error);
@@ -83,8 +85,51 @@ const BoardSideMenu = ({ board, setBoard }) => {
         }
     }
 
+    const addMember = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axiosPrivate.put(`${URL}/add-member/${board._id}`, {
+                email: e.target.email.value,
+                boardRole: e.target.boardRole.value
+            }, {
+                headers: {
+                    Authorization: auth.accessToken
+                }
+            });
+            if (response?.status === 200) {
+                document.querySelector('#add-member-board').style.display = 'none'
+                setMessage('Member added to the board, refresh to see changes');
+                document.querySelector('.successModal').style.display = 'block'
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const editPrivacy = async (value) => {
+        try {
+            const response = await axiosPrivate.put(`${URL}/${board._id}`,{
+                privacy: value
+            }, {
+                headers: {
+                    Authorization: auth.accessToken
+                }
+            });
+            if(response?.status === 200){
+                setBoard({
+                    ...board,
+                    privacy: value
+                });
+                document.querySelector('#edit-privacy-board').style.display = 'none'
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <>
+            {/* Board menu */}
             <aside className="board-sidemenu">
                 <h2 style={{ textAlign: 'center' }}>Menu</h2><hr />
                 <ul>
@@ -144,9 +189,9 @@ const BoardSideMenu = ({ board, setBoard }) => {
                             {
                                 board.members.map(member => (
                                     (member.boardRole === 'administrator') && (
-                                        <li key={member.user._id}>
+                                        <li key={member._id} >
                                             <h4>{member?.user?.name} {member?.user?.surname}</h4>
-                                            <p>@{member?.user?.username}</p>
+                                            <p style={{color:'darkgray'}}>@{member?.user?.username}</p>
                                         </li>
                                     )
                                 ))
@@ -164,24 +209,47 @@ const BoardSideMenu = ({ board, setBoard }) => {
                         </textarea>
                     </section><hr />
                     <section>
-                        <h4>Board members</h4>
+                        <h4>Collaborators</h4>
                         <ul>
                             {
                                 board.members.map(member => (
-                                    <li key={member.user._id}>
-                                        <h4>{member?.user?.name} {member?.user?.surname}</h4>
-                                        <p>@{member?.user?.username}</p>
-                                    </li>
+                                    (member.boardRole !== 'administrator') && (
+                                        <li key={member._id}>
+                                            <h4>{member?.user?.name} {member?.user?.surname}</h4>
+                                            <p style={{color:'darkgray'}}>@{member?.user?.username}</p>
+                                        </li>
+                                    )
                                 ))
                             }
                         </ul>
                     </section><hr />
-                    <section>
+                    <section style={{ position: 'relative' }}>
                         <h4>Actions</h4>
                         <ul>
                             <li><strong style={{ cursor: 'pointer' }} onClick={enableEditDescription}>Edit description</strong></li>
-                            <li><strong style={{ cursor: 'pointer' }}>Add member</strong></li>
+                            <li><strong style={{ cursor: 'pointer' }} onClick={e => {
+                                document.querySelector('#add-member-board').style.display = 'block'
+                            }}>Add member</strong></li>
                         </ul>
+                        <div className="floating_div_board_menu" id="add-member-board">
+                            <form onSubmit={addMember}>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <label>Email</label>
+                                    <input type="email" placeholder="Type an email" name="email" required />
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px' }}>
+                                    <label>Role</label>
+                                    <select name="boardRole">
+                                        <option value='collaborator'>Collaborator</option>
+                                        <option value='administrator'>Administrator</option>
+                                    </select>
+                                </div>
+                                <input type="submit" value='Add' />
+                                <p style={{ backgroundColor: 'red', margin: '0 auto', marginTop: '10px', height: '26px', width: '200px', borderRadius: '5px', fontWeight: 'bold', cursor: 'pointer' }} onClick={e => {
+                                    document.querySelector('#add-member-board').style.display = 'none'
+                                }}>Cancel</p>
+                            </form>
+                        </div>
                     </section>
                 </section>
 
@@ -191,25 +259,35 @@ const BoardSideMenu = ({ board, setBoard }) => {
                         <h3 style={{ textAlign: 'center' }}>Settings</h3>
                         <p className="close" onClick={e => toggleSubMenus('#submenu_settings')}>x</p>
                     </div><hr />
-                    {/* <section>
-                        <h4>Board admins</h4>
+                    <section>
+                        <h4>Privacy</h4>
+                        <p style={{ textTransform: 'capitalize', color:'darkgray' }}>{board.privacy}</p>
+                        <h4 style={{ fontStyle: 'italic', marginTop: '10px' }}>Privacy information</h4>
                         <ul>
-                            {
-                                board.members.map(member => (
-                                    (member.boardRole === 'administrator') && (
-                                        <li key={member.user._id}>
-                                            <h4>{member?.user?.name} {member?.user?.surname}</h4>
-                                            <p>@{member?.user?.username}</p>
-                                        </li>
-                                    )
-                                ))
-                            }
+                            <li>
+                                <p style={{color:'darkgray'}}>Private. Only MEMBERS of the board are allowed to access to it</p>
+                            </li>
+                            <li style={{ marginTop: '10px' }}>
+                                <p style={{color:'darkgray'}}>Workspace. Any MEMBER of the current workspace is able to access the board</p>
+                            </li>
+                            <li style={{ marginTop: '10px' }}>
+                                <p style={{color:'darkgray'}}>Public. Anyone with the link can access to it, but can't modify as only members of the board and users with administrator role are able to edit</p>
+                            </li>
                         </ul>
                     </section><hr />
                     <section>
-                        <h4>Description</h4>
-                        <p style={{ marginTop: '15px' }}>{board.description}</p>
-                    </section> */}
+                        <h4>Actions</h4>
+                        <ul>
+                            <li><strong style={{ cursor: 'pointer' }} onClick={e => document.querySelector('#edit-privacy-board').style.display = 'block'} >Edit privacy</strong></li>
+                        </ul>
+                        <div className="floating_div_board_menu" id="edit-privacy-board">
+                            <ul>
+                                <li onClick={e => editPrivacy('private')}>Private</li>
+                                <li onClick={e => editPrivacy('workspace')}>Workspace</li>
+                                <li onClick={e => editPrivacy('public')}>Public</li>
+                            </ul>
+                        </div>
+                    </section>
                 </section>
 
                 {/* BACKGROUND SETTINGS */}
@@ -232,11 +310,12 @@ const BoardSideMenu = ({ board, setBoard }) => {
                 </section>
 
             </aside>
+            {/* Floating modal */}
             <div className="successModal">
                 <p style={{ textAlign: 'end', color: 'white', cursor: 'pointer' }} onClick={e => {
                     document.querySelector('.successModal').style.display = 'none'
                 }}>X</p>
-                <p style={{ color: 'white', fontWeight: 'bold' }}>Description has been updated</p>
+                <p style={{ color: 'white', fontWeight: 'bold' }}>{message}</p>
             </div>
         </>
     )
