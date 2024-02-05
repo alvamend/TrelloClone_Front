@@ -7,7 +7,9 @@ const useLogout = () => {
 
     const logout = async () => {
         setAuth({})
-        setProject({})
+        setProject({
+            id: ''
+        })
         try {
             const response = await axios.delete(LOGOUT_URL, {
                 headers: {

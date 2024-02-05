@@ -8,7 +8,7 @@ import Create from "./floating-divs/Create";
 
 const FETCH_URL = 'workspace';
 const Header = ({ workspaces, setWorkspaces }) => {
-    const { auth, setProject } = useAuth();
+    const { auth, project, setProject } = useAuth();
     const navigate = useNavigate();
     const logout = useLogout();
 
@@ -56,12 +56,18 @@ const Header = ({ workspaces, setWorkspaces }) => {
         document.querySelector('.modal-background').style.display = 'flex';
     }
 
+    useEffect(() => {
+        sessionStorage.setItem('project', JSON.stringify(project))
+    }, [project])
+
     return (
         <>
             <header className="header">
                 <div style={{ display: 'flex' }}>
                     <div className="img-logo" onClick={e => {
-                        sessionStorage.setItem('project', null)
+                        setProject({
+                            id: ''
+                        });
                         navigate('/home')
                     }
                     }>

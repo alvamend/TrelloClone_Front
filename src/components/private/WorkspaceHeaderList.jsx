@@ -19,7 +19,9 @@ const WorkspaceHeaderList = ({ workspaces }) => {
                 {workspaces.map(workspace => (
                     (workspace.members[0].user === auth.sub)
                         ? <li key={workspace._id} onClick={e => {
-                            setProject(workspace._id);
+                            setProject({
+                                id: workspace._id
+                            });
                             navigate(`/workspace/${workspace._id}`);
                             document.querySelector('#floating-menu-workspaces').style.display = 'none';
                         }}>
@@ -33,7 +35,9 @@ const WorkspaceHeaderList = ({ workspaces }) => {
                 {workspaces.map(workspace => (
                     (workspace.members[0].user !== auth.sub)
                         ? <li key={workspace._id} onClick={e => {
-                            setProject(workspace._id);
+                            setProject({
+                                id: workspace._id
+                            });
                             navigate(`/workspace/${workspace._id}`);
                             document.querySelector('#floating-menu-workspaces').style.display = 'none';
                         }}>

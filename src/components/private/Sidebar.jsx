@@ -20,9 +20,9 @@ const Sidebar = ({ workspaces }) => {
     useEffect(() => {
 
         const fetchData = async () => {
-            if (Object.keys(project).length > 0) {
+            if (project.id) {
                 try {
-                    const response = await axiosPrivate(`workspace/${project}`);
+                    const response = await axiosPrivate(`workspace/${project.id}`);
                     if (response?.status === 200) {
                         setSelectedWorkspace(response?.data);
                         setIsLoading(false);
@@ -46,8 +46,20 @@ const Sidebar = ({ workspaces }) => {
                 <aside className="sidebar">
                     <div className="sidebar-items">
                         {
-                            selectedWorkspace?._id
+                            project.id === ''
                                 ? (
+                                    <>
+                                        <h4>Workspaces</h4>
+                                        <ul className="workspace-list">
+                                            {workspaces.map(workspace => (
+                                                <li key={workspace._id}>{workspace.title}</li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )
+                                :
+                                selectedWorkspace?._id
+                                && (
                                     <>
                                         <section>
                                             <h3 style={{ color: 'var(--primary-dark)' }}>Workspace Menu</h3>
@@ -106,16 +118,6 @@ const Sidebar = ({ workspaces }) => {
                                         </section>
                                     </>
                                 )
-                                : (
-                                    <>
-                                        <h4>Workspaces</h4>
-                                        <ul className="workspace-list">
-                                            {workspaces.map(workspace => (
-                                                <li key={workspace._id}>{workspace.title}</li>
-                                            ))}
-                                        </ul>
-                                    </>
-                                )
                         }
                     </div>
                 </aside >
@@ -124,3 +126,5 @@ const Sidebar = ({ workspaces }) => {
 }
 
 export default Sidebar
+
+// ARREGLAR BUG, NO MUESTRA EL HOME

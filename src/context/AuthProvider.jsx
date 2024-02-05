@@ -5,10 +5,12 @@ export const AuthContext = createContext({});
 const AuthProvider = ({children}) => {
 
     const [auth, setAuth] = useState({});
-    const [project, setProject] = useState({});
+    const [project, setProject] = useState({
+        id: ''
+    });
 
     useEffect(() => {
-        !sessionStorage.getItem('project') ? sessionStorage.setItem('project', null) : setProject(JSON.parse(sessionStorage.getItem('project')));
+        !JSON.parse(sessionStorage.getItem('project')) ? sessionStorage.setItem('project', JSON.stringify(project)) : setProject(JSON.parse(sessionStorage.getItem('project')));
     },[])
 
     return(
