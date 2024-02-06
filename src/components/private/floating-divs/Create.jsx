@@ -88,9 +88,6 @@ const Create = ({ workspaces, setWorkspaces }) => {
 
     const addMember = async (e) => {
         e.preventDefault();
-        console.log(e.target.email.value)
-        console.log(e.target.workspaceRole.value);
-        console.log(e.target.workspaceMember.value);
         try {
             const response = await axiosPrivate.put(`${CREATE_WORKSPACE_URL}/add-member/${e.target.workspaceMember.value}`, {
                 email: e.target.email.value,

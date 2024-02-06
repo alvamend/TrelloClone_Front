@@ -2,14 +2,16 @@ import { useEffect, useState } from "react"
 import useAuth from "../../hooks/useAuth";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import useNavigateProject from "../../hooks/useNavigateProject";
 
 const Sidebar = ({ workspaces }) => {
 
-    const { auth, project } = useAuth();
+    const { auth, project, setProject } = useAuth();
     const [isLoading, setIsLoading] = useState(true);
     const [selectedWorkspace, setSelectedWorkspace] = useState({});
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
+    const navigateToProject = useNavigateProject();
 
     const showCreateBoard = (e) => {
         document.querySelector('#floating-menu-create').style.display = 'none'
@@ -49,10 +51,10 @@ const Sidebar = ({ workspaces }) => {
                             project.id === ''
                                 ? (
                                     <>
-                                        <h4>Workspaces</h4>
+                                        <h4 style={{color:'var(--primary-dark)'}}>Workspaces</h4>
                                         <ul className="workspace-list">
                                             {workspaces.map(workspace => (
-                                                <li key={workspace._id}>{workspace.title}</li>
+                                                <li key={workspace._id} onClick={e => navigateToProject(workspace._id)}> {workspace.title}</li>
                                             ))}
                                         </ul>
                                     </>

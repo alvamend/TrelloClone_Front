@@ -19,7 +19,7 @@ const Boards = ({ workspace }) => {
                 </div>
                 {(workspace?.boards && workspace?.boards.length) > 0 && (
                     workspace.boards.map(board => (
-                        <div key={board._id} className="board-item" style={{ backgroundColor: `${board.background}` }} onClick={e => navigate(`/board/${board._id}`)}>
+                        <div key={board._id} className="board-item" style={{ background: `${board.background}` }} onClick={e => navigate(`/board/${board._id}`)}>
                             <h4>{board.title}</h4>
                         </div>
                     ))

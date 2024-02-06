@@ -116,7 +116,14 @@ const Header = ({ workspaces, setWorkspaces }) => {
                                 <h5>{auth.username}</h5>
                                 <h5 style={{ color: 'gray' }}>{auth.email}</h5>
                                 <ul className="avatar-list">
-                                    <li className="avatar-list_item">
+                                    <li className="avatar-list_item"
+                                        onClick={e => {
+                                            setProject({
+                                                id: ''
+                                            })
+                                            navigate(`/user/${auth.username}`);
+                                            document.querySelector('#floating-menu-avatar').style.display = 'none';
+                                        }}>
                                         <div className="list-icon">
                                             <img src="/img/configuracion.png" alt="settings" />
                                         </div>
