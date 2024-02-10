@@ -30,7 +30,7 @@ const Members = ({ workspace, setWorkspace }) => {
             console.error(error);
         }
     }
-    
+    console.log(workspace);
     return (
         <>
             <h2>Members</h2>
@@ -39,7 +39,7 @@ const Members = ({ workspace, setWorkspace }) => {
                     workspace.members.map(member => (
                         <li key={member._id} onClick={e => handleDelete(member?.user?.email)}>
                             <div>
-                                <h4>{member?.user?.name} {member.user.surname}</h4>
+                                <h4>{member?.user?.name} {member?.user?.surname}</h4>
                                 <p>{member?.user?.username}</p>
                                 <p>{member?.user?.email}</p>
                             </div>

@@ -353,7 +353,6 @@ button img {
     }
 
     .successModal {
-        display: none;
         width: 400px;
         height: 80px;
         background-color: black;
@@ -403,8 +402,10 @@ button img {
 
     .content {
         grid-area: main_content;
-        min-height: 100%;
-        overflow: auto;
+        height: 100%;
+        width: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
     .title_workspace {
@@ -596,8 +597,8 @@ button img {
         background-color: rgba(0, 0, 0, .7);
         color: white;
         display: flex;
-        align-items: center;
         justify-content: space-between;
+        position: relative;
     }
 
     .board-header_icon {
@@ -613,12 +614,11 @@ button img {
     }
 
     .board-sidemenu {
+        position: absolute;
+        top: 100%;
+        right: 0;
         width: 360px;
-        height: calc(100% - 60px);
         background-color: rgba(0, 0, 0, .7);
-        position: relative;
-        top: 0;
-        bottom: 100%;
         z-index: 1;
         transform: translateX(360px);
         overflow: visible;
@@ -627,6 +627,7 @@ button img {
         float: right;
         padding: 30px;
         color: white;
+        border-radius: 5px;
     }
 
     .board-sidemenu hr {
@@ -700,6 +701,7 @@ button img {
         border: 1px white solid;
         padding: 10px;
         z-index: 2;
+        background-color: black;
     }
 
     .floating_div_board_menu ul {
@@ -777,6 +779,12 @@ button img {
     .user-sidebar_settings li:hover{
         cursor: pointer;
         background-color: gray;
+    }
+
+    /* Lists style */
+
+    .list-container{
+        height: 100%;
     }
 
 }

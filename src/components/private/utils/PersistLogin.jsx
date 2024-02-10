@@ -27,7 +27,7 @@ const PersistLogin = () => {
 
     return(
         isLoading
-            ? 'Loading...'
+            ? ''
             : <Outlet />
     )
 
