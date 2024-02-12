@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import List from "./List";
+import Card from "../card/Card";
 
 const URL = "list";
 const ListContainer = ({ boardId }) => {
   const [listArray, setListArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedCard, setSelectedCard] = useState("");
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
 
@@ -30,20 +33,20 @@ const ListContainer = ({ boardId }) => {
     getLists();
   }, []);
 
-  return (
+  return isLoading ? (
+    ""
+  ) : (
     <div className="list-container">
-      <div style={{display:'flex', flexWrap:'wrap'}}>
-      <h1>{boardId}</h1>
-      <h1>{boardId}</h1>
-      <h1>{boardId}</h1>
-      <h1>{boardId}</h1>
-      <h1>{boardId}</h1>
-      <h1>{boardId}</h1>
-      <h1>{boardId}</h1>
-      <h1>{boardId}</h1>
-      <h1>{boardId}</h1>
-      <h1>{boardId}</h1>
+      <div className="divwrap">
+        {listArray.map((list) => (
+          <List list={list} key={list._id} setSelectedCard={setSelectedCard} />
+        ))}
+
+        <div className="btn-add-list">
+          <h3>+ Create a new list</h3>
+        </div>
       </div>
+      <Card card={selectedCard} />
     </div>
   );
 };
