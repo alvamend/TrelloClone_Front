@@ -24,7 +24,6 @@ const Card = ({ card = "" }) => {
           });
 
           if (response?.status === 200) {
-            console.log(response.data);
             setCardInformation(response.data);
             setIsLoading(false);
           }
@@ -66,7 +65,7 @@ const Card = ({ card = "" }) => {
             </section>
           </div>
 
-          <CardSidebar />
+          <CardSidebar cardInformation={cardInformation} />
         </div>
       )}
     </div>

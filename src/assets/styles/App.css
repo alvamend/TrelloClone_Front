@@ -916,6 +916,46 @@ button img {
   .card-section-icon img{
     max-height: 100%;
     filter: invert(1);
-    margin-right: 15px;
+    margin-right: 8px;
+  }
+
+  .card-sidebar-listitem{
+    position: relative;
+    height: 30px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    border-radius: 5px;
+  }
+
+  .card-sidebar-listitem:hover{
+    cursor: pointer;
+    background-color: rgb(53, 53, 53);
+  }
+
+  .card-sidebar-icon{
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .card-sidebar-icon img{
+    height: 80%;
+    filter: invert(1);
+    margin-right: 5px;
+  }
+
+  /* Floating card settings */
+  #add-attachment{
+    display: none;
+    position: absolute;
+    top: 100%;
+    width: 200px;
+    min-height: 100px;
+    background-color: rgb(66, 66, 66);
+    z-index: 4;
+    padding: 10px;
+    border-radius: 5px;
   }
 }

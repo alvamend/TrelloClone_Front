@@ -48,7 +48,7 @@ const Attachments = ({ cardId }) => {
   ) : (
     <ul>
       {attachmentList.map((attachment) => (
-        <li key={attachment._id}>
+        <li key={attachment._id} style={{marginTop:'5px'}}>
           <p style={{ fontWeight: "bold" }}>{attachment.description}</p>
           <p
             style={{ cursor: "pointer", display: "inline-block" }}

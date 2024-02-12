@@ -9,8 +9,8 @@ const CardCheckList = ({cardInformation}) => {
       </div>
       {cardInformation?.taskList.map((task) => (
         <>
-          <div key={task?._id}>
-            <input type="checkbox" id={`task${task._id}`} />
+          <div key={task?._id} style={{height:'30px', padding:'5px'}}>
+            <input type="checkbox" id={`task${task._id}`} style={{marginRight:'8px'}} />
             <label htmlFor={`task${task._id}`}>{task.task}</label>
           </div>
         </>
