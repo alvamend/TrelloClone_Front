@@ -2,25 +2,27 @@ import { useEffect } from "react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
-const CardSidebar = ({ cardInformation = {} }) => {
+const CardSidebar = ({ cardInformation = {}, setCardInformation }) => {
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    window.onclick = function(event){
-      const closeAdd = document.querySelector('#close-add');
-      if(event.target === closeAdd){
-        document.querySelector('#add-attachment').style.display = 'none'
+    window.onclick = function (event) {
+      const closeAdd = document.querySelector("#close-add");
+      const closeChangeCover = document.querySelector("#close-change-cover");
+      if (event.target === closeAdd) {
+        document.querySelector("#add-attachment").style.display = "none";
       }
-    }
-  },[])
+      if (event.target === closeChangeCover) {
+        document.querySelector("#change-card-cover").style.display = "none";
+      }
+    };
+  }, []);
 
   const closeCard = (e) => {
     document.querySelector("#floating-card").style.display = "none";
     document.querySelector(".floating-card-background").style.display = "none";
   };
-
-  console.log(cardInformation);
 
   const addFile = async (e) => {
     e.preventDefault();
@@ -47,6 +49,23 @@ const CardSidebar = ({ cardInformation = {} }) => {
     }
   };
 
+  const changeCover = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosPrivate.put(`card/${cardInformation._id}`, {
+        cover: e.target.color.value,
+      });
+      if (response.status === 200) {
+        setCardInformation({
+          ...cardInformation,
+          cover: e.target.color.value,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="card_sidebar">
       <p style={{ float: "right", cursor: "pointer" }} onClick={closeCard}>
@@ -61,6 +80,7 @@ const CardSidebar = ({ cardInformation = {} }) => {
             </div>
             <p>Member</p>
           </li>
+
           <li
             className="card-sidebar-listitem"
             onClick={(e) => {
@@ -72,7 +92,9 @@ const CardSidebar = ({ cardInformation = {} }) => {
             </div>
             <p>Attachment</p>
             <div id="add-attachment">
-              <p style={{ float: "right" }} id="close-add">X</p>
+              <p style={{ float: "right" }} id="close-add">
+                X
+              </p>
               <h4>Add attachment</h4>
               <form encType="multipart/form-data" onSubmit={addFile}>
                 <label htmlFor="file">File</label>
@@ -87,14 +109,37 @@ const CardSidebar = ({ cardInformation = {} }) => {
               </form>
             </div>
           </li>
-          <li className="card-sidebar-listitem">
+
+          <li
+            className="card-sidebar-listitem"
+            onClick={(e) => {
+              document.querySelector("#change-card-cover").style.display =
+                "block";
+            }}
+          >
             <div className="card-sidebar-icon">
               <img src="/img/pintura.png" />
             </div>
             <p>Cover</p>
+            <div id="change-card-cover">
+              <p style={{ float: "right" }} id="close-change-cover">
+                X
+              </p>
+              <h4>Change cover</h4>
+              <form onSubmit={changeCover}>
+                <label htmlFor="color">Color</label>
+                <input
+                  type="color"
+                  name="color"
+                  style={{ marginLeft: "10px" }}
+                />
+                <input type="submit" value="Change" style={{ width: "100%" }} />
+              </form>
+            </div>
           </li>
         </ul>
       </section>
+
       <section>
         <h4>Actions</h4>
         <ul>

@@ -958,4 +958,28 @@ button img {
     padding: 10px;
     border-radius: 5px;
   }
+
+  #change-card-cover{
+    display: none;
+    position: absolute;
+    top: 100%;
+    width: 200px;
+    min-height: 100px;
+    background-color: rgb(66, 66, 66);
+    z-index: 4;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .textarea-card-description{
+    background: 0;
+    border: 0;
+    font-family: var(--font);
+    margin-top: 10px;
+    width: 100%;
+    resize: none;
+    min-height: 50px;
+    margin-bottom: 10px;
+    color: white;
+  }
 }

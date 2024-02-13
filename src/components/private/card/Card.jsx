@@ -48,7 +48,10 @@ const Card = ({ card = "" }) => {
         <div id="floating-card">
           <div className="card-content">
             <Title cardInformation={cardInformation} />
-            <CardDescription cardInformation={cardInformation} />
+            <CardDescription
+              cardInformation={cardInformation}
+              setCardInformation={setCardInformation}
+            />
             <CardCheckList cardInformation={cardInformation} />
 
             <section className="card-section">
@@ -65,7 +68,10 @@ const Card = ({ card = "" }) => {
             </section>
           </div>
 
-          <CardSidebar cardInformation={cardInformation} />
+          <CardSidebar
+            cardInformation={cardInformation}
+            setCardInformation={setCardInformation}
+          />
         </div>
       )}
     </div>
